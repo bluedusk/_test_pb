@@ -1,0 +1,26 @@
+version: 0.1.0-experimental
+stages:
+  - Build
+  - Test
+  - Staging
+  - Production
+tasks:
+  - workflow: build # the workflow name
+    stage: Build # required, must have a Stage
+  - workflow: unit test
+    name: test1 # give this task a name
+    stage: Test
+  - workflow: integration test
+    name: test2
+    stage: Test
+  - workflow: deploy to staging
+    name: auto-deploy-staging
+    allOf: [test1, test2]
+    stage: Staging
+  - workflow: deploy to production
+    name: deploy to prod
+    stage: Production
+    trigger: manual # default is auto
+    input: # parameters for task
+      - env: string
+      - sshPassword: password
