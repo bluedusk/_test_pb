@@ -10,6 +10,9 @@ tasks:
   - workflow: unit test
     name: test1 # give this task a name
     stage: Test
+  - workflow: unit test
+    name: test2 # give this task a name
+    stage: Test
   - workflow: deploy to staging
     name: auto-deploy-staging
     allOf: [test1, test2]
